@@ -9,7 +9,7 @@ const c = new Client({
 c.socket.on(SocketEvents.OPEN, async (u) => {
     console.log(`Logged in as ${u.user.username} (${u.user.id})`);
 
-    // const room = c.roomManager.getOrCreateRoom(0, "global");
+    const room = c.roomManager.getOrCreateRoom(0, "global");
     // const msg = await room.sendMessage("Hello, world!");
 
     const user = await c.userManager.fetchUser("zastix");

@@ -4,7 +4,8 @@
 		"name": "zastix",
 		"url": "https://zastix.club/"
 	},
-	"description": "A API wrapper for https://blacket.org/ written in TypeScript, attempting providing 1:1 implementation of the API by v1.0.0",
+	"version": "0.0.1-alpha",
+	"description": "An API wrapper for https://blacket.org/ written in TypeScript, attempting providing 1:1 implementation of the API by v1.0.0",
 	"main": "dist/index.js",
 	"files": [
 		"/dist"
