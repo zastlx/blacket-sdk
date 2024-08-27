@@ -1,0 +1,43 @@
+{
+	"name": "blacket.js",
+	"author": {
+		"name": "zastix",
+		"url": "https://zastix.club/"
+	},
+	"description": "A API wrapper for https://blacket.org/ written in TypeScript, attempting providing 1:1 implementation of the API by v1.0.0",
+	"main": "dist/index.js",
+	"files": [
+		"/dist"
+	],
+	"keywords": [
+		"blacket",
+		"xotic",
+		"zastix",
+		"wrapper",
+		"betastar",
+		"blacket.js",
+		"blacket.org",
+		"blacketps"
+	],
+	"license": "MIT",
+	"type": "module",
+	"scripts": {
+		"build": "tsc",
+		"start": "node .",
+		"dev": "bun . --watch",
+		"doc": "typedoc src/index.ts"
+	},
+	"devDependencies": {
+		"@types/bun": "^1.1.6",
+		"dotenv": "^16.4.5",
+		"@types/set-cookie-parser": "^2.4.10",
+		"typescript": "^5.0.0"
+	},
+	"dependencies": {
+		"axios": "^1.7.4",
+		"esbuild": "^0.23.1",
+		"set-cookie-parser": "^2.7.0",
+		"typedoc": "^0.26.6",
+		"ws": "^8.18.0"
+	}
+}
