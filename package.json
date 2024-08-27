@@ -26,7 +26,7 @@
 		"build": "tsc",
 		"start": "node .",
 		"dev": "bun . --watch",
-		"doc": "typedoc src/index.ts"
+		"doc": "typedoc src/index.ts && echo \"blacketjs.zastix.club\" > docs/CNAME"
 	},
 	"devDependencies": {
 		"@types/bun": "^1.1.6",
