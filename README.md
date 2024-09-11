@@ -1,4 +1,4 @@
-# Blacket-sdk
+# blacket-sdk
 An API wrapper for https://blacket.org/ written in TypeScript, attempting providing 1:1 implementation of the API by v1.0.0
 ### Installation
 ```bash
