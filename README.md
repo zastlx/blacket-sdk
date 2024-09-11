@@ -1,13 +1,13 @@
-# Blacket.js
+# Blacket-sdk
 An API wrapper for https://blacket.org/ written in TypeScript, attempting providing 1:1 implementation of the API by v1.0.0
 ### Installation
 ```bash
-npm install blacket.js
+npm install blacket-sdk
 ```
 
 ### Usage
 ```typescript
-import { Client, getToken } from 'blacket.js';
+import { Client, getToken } from 'blacket-sdk';
 
 const client = new Client({
     token: await getToken("zastix", "password"),
