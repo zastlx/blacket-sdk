@@ -25,6 +25,7 @@ const getToken = async (username: string, password: string, otp?: string): Promi
 
     // @ts-ignore stupid package is weird
     const realParse = parse?.default || parse;
+    // @ts-ignore stupid package is weird
     return realParse(headers["set-cookie"]!, { map: true, decodeValues: false })["token"].value;
 }
 

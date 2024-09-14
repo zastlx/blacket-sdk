@@ -1,7 +1,7 @@
 import { RawBlook } from "src/data.types";
 import Rarity from "./rarity";
-import { endpoints } from "src/consts";
-import { Client } from "src";
+import { endpoints } from "../";
+import { Client } from "../";
 import Pack from "./pack";
 
 export enum Day {
