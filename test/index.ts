@@ -6,7 +6,7 @@ const c = new Client({
     reconnect: true
 });
 
-c.socket.on(SocketEvents.OPEN, async (u) => {
+c.on(SocketEvents.OPEN, async (u) => {
     console.log(`Logged in as ${u.user.username} (${u.user.id})`);
 
     const room = c.roomManager.getOrCreateRoom(0, "global");

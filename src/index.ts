@@ -1,5 +1,5 @@
 import axios, { type AxiosInstance } from "axios";
-import { Socket } from "./socket";
+import { MessageAckEvent, CloseEvent, MessageCreateEvent, MessageDeleteEvent, MessageEditEvent, NotificationEvent, OpenEvent, Socket, SocketEvents } from "./socket";
 import RoomManager from "./room";
 import MessageManager from "./message";
 import { version } from "./consts";
@@ -61,6 +61,8 @@ export class Client {
         };
         this.messageManager = new MessageManager(this);
         this.socket = new Socket(this);
+        this.on = this.socket.on.bind(this.socket);
+        this.off = this.socket.off.bind(this.socket);
         this.axiosInstace = axios.create({
             baseURL: "https://blacket.org/",
             headers: {
@@ -74,5 +76,30 @@ export class Client {
         this.roomManager = new RoomManager(this);
         this.clanManager = new ClanManager(this);
         this.dataManager = new DataManager(this);
+    }
+
+    public on(event: SocketEvents.OPEN, callback: OpenEvent): void;
+    public on(event: SocketEvents.CLOSE, callback: CloseEvent): void;
+    public on(event: SocketEvents.MESSAGE_CREATE, callback: MessageCreateEvent): void;
+    public on(event: SocketEvents.MESSAGE_DELETE, callback: MessageDeleteEvent): void;
+    public on(event: SocketEvents.MESSAGE_EDIT, callback: MessageEditEvent): void;
+    public on(event: SocketEvents.MESSAGE_ACK, callback: MessageAckEvent): void;
+    public on(event: SocketEvents.NOTIFICATION, callback: NotificationEvent): void;
+    public on(event: SocketEvents.HEARTBEAT, callback: CloseEvent): void;
+    public on(event: SocketEvents, callback: Function) {
+        // @ts-expect-error - FIXME: if anyone knows how to fix this, lmk
+        this.socket.on(event, callback);
+    }
+
+    public off(event: SocketEvents.OPEN, callback: OpenEvent): void;
+    public off(event: SocketEvents.CLOSE, callback: CloseEvent): void;
+    public off(event: SocketEvents.MESSAGE_CREATE, callback: MessageCreateEvent): void;
+    public off(event: SocketEvents.MESSAGE_EDIT, callback: MessageEditEvent): void;
+    public off(event: SocketEvents.MESSAGE_ACK, callback: MessageAckEvent): void;
+    public off(event: SocketEvents.NOTIFICATION, callback: NotificationEvent): void;
+    public off(event: SocketEvents.HEARTBEAT, callback: CloseEvent): void;
+    public off(event: SocketEvents, callback: Function) {
+        // @ts-expect-error - FIXME: if anyone knows how to fix this, lmk
+        this.socket.off(event, callback);
     }
 }
