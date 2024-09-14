@@ -1,5 +1,5 @@
-import { Client, endpoints } from "src";
-import { RawItem } from "src/data.types";
+import { Client, endpoints } from "..";
+import { RawItem } from "../data.types";
 
 export default class Item {
     public readonly name: string;

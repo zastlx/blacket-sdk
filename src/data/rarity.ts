@@ -1,5 +1,5 @@
-import { Client } from "src";
-import { RawRarity } from "src/data.types";
+import { Client } from "..";
+import { RawRarity } from "../data.types";
 
 export enum AnimationType {
     None = "none",

@@ -1,4 +1,4 @@
-import { RawBadge } from "src/data.types";
+import { RawBadge } from "../data.types";
 
 export default class Badge implements RawBadge {
     public readonly name: string;

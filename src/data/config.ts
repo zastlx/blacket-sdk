@@ -1,5 +1,5 @@
 import { Client, User } from "../index";
-import { RawChatConfig, RawConfig, RawCredit, RawExp, RawPage, RawReports, RawStore } from "src/data.types";
+import { RawChatConfig, RawConfig, RawCredit, RawExp, RawPage, RawReports, RawStore } from "../data.types";
 
 export class ConfigPage implements RawPage {
     public readonly icon: string;

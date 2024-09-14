@@ -1,6 +1,6 @@
-import { Client, SocketEvents } from "src";
-import { RawBooster } from "src/data.types";
-import { User } from "src/user";
+import { Client, SocketEvents } from "..";
+import { RawBooster } from "../data.types";
+import { User } from "../user";
 
 export default class Booster {
     public inited: boolean = false;

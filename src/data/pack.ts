@@ -1,6 +1,6 @@
-import { RawPack } from "src/data.types";
+import { RawPack } from "../data.types";
 import Blook from "./blook";
-import { Client, endpoints } from "src";
+import { Client, endpoints } from "..";
 
 export default class Pack {
     public readonly name: string;

@@ -1,5 +1,5 @@
-import { Client } from "src";
-import { RawWeeklyShopItem } from "src/data.types";
+import { Client } from "..";
+import { RawWeeklyShopItem } from "../data.types";
 import Item from "./item";
 
 export default class WeeklyShopItem implements RawWeeklyShopItem {

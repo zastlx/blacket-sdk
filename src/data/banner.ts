@@ -1,4 +1,4 @@
-import { RawResource } from "src/data.types";
+import { RawResource } from "../data.types";
 
 export default class Banner implements RawResource {
     public readonly name: string;

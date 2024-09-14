@@ -1,5 +1,5 @@
 import { Client, User } from "../index";
-import { RawCredit } from "src/data.types";
+import { RawCredit } from "../data.types";
 /*    nickname: string;
     image?: any;
     note: string;

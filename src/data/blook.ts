@@ -1,4 +1,4 @@
-import { RawBlook } from "src/data.types";
+import { RawBlook } from "../data.types";
 import Rarity from "./rarity";
 import { endpoints } from "../";
 import { Client } from "../";
