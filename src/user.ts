@@ -134,7 +134,7 @@ export class User {
         this.inited = true;
         if (this._clan) {
             this.clan = await this.client.clanManager.fetchClan(parseInt(this._clan.id));
-            await this.clan.init();
+            if (this.clan) await this.clan.init();
         }
 
         this.friends = await Promise.all(this._friends.map(async (id) => await this.client.userManager.fetchUser(id)));
