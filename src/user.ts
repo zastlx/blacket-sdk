@@ -110,23 +110,23 @@ export class User {
 
     constructor(client: Client, data: RawUser) {
         this.client = client;
-        this.id = data.id;
-        this.username = data.username;
-        this.created = new Date(data.created);
-        this.modified = new Date(data.modified);
-        this.avatar = data.avatar;
-        this.banner = data.banner;
-        this.badges = data.badges as UserBadge[];
-        this.blooks = new Map(Object.entries(data.blooks));
-        this.tokens = data.tokens;
-        this.role = data.role;
-        this.color = data.color;
-        this.exp = data.exp;
-        this.mute = data.mute;
-        this.ban = data.ban;
-        this.misc = data.misc;
-        this._clan = data.clan;
-        this._friends = data.friends;
+        this.id = data?.id;
+        this.username = data?.username;
+        this.created = new Date(data?.created);
+        this.modified = new Date(data?.modified);
+        this.avatar = data?.avatar;
+        this.banner = data?.banner;
+        this.badges = data?.badges as UserBadge[];
+        this.blooks = new Map(Object.entries(data?.blooks));
+        this.tokens = data?.tokens;
+        this.role = data?.role;
+        this.color = data?.color;
+        this.exp = data?.exp;
+        this.mute = data?.mute;
+        this.ban = data?.ban;
+        this.misc = data?.misc;
+        this._clan = data?.clan;
+        this._friends = data?.friends;
     }
 
     public async init(): Promise<void> {
@@ -317,7 +317,7 @@ export default class UserManager {
 
         const { data } = await this.client.axiosInstace.get(endpoints.user.get(idOrName));
 
-        if (data.error && (data.reason === "User not found." || data.reason === "Username must be less than or 16 characters long.")) return null;
+        if (data.error && (["Username can not contain invalid characters.", "User not found.", "Username must be less than or 16 characters long."].includes(data.reason))) return null;
         else if (data.error) throw new Error(data.reason);
 
         const user_ = new User(this.client, data.user);

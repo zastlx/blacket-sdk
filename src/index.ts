@@ -78,6 +78,10 @@ export class Client {
         this.dataManager = new DataManager(this);
     }
 
+    public login() {
+        this.socket.connect();
+    }
+
     public on(event: SocketEvents.OPEN, callback: OpenEvent): void;
     public on(event: SocketEvents.CLOSE, callback: CloseEvent): void;
     public on(event: SocketEvents.MESSAGE_CREATE, callback: MessageCreateEvent): void;
@@ -102,4 +106,15 @@ export class Client {
         // @ts-expect-error - FIXME: if anyone knows how to fix this, lmk
         this.socket.off(event, callback);
     }
+}
+
+export interface SocketEventToCallbackType {
+    [SocketEvents.OPEN]: OpenEvent;
+    [SocketEvents.CLOSE]: CloseEvent;
+    [SocketEvents.MESSAGE_CREATE]: MessageCreateEvent;
+    [SocketEvents.MESSAGE_DELETE]: MessageDeleteEvent;
+    [SocketEvents.MESSAGE_EDIT]: MessageEditEvent;
+    [SocketEvents.MESSAGE_ACK]: MessageAckEvent;
+    [SocketEvents.NOTIFICATION]: NotificationEvent;
+    [SocketEvents.HEARTBEAT]: CloseEvent;
 }

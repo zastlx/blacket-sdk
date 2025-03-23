@@ -87,8 +87,11 @@ export class Socket {
             [SocketEvents.HEARTBEAT]: new Set()
         };
         this.client = client;
-        this.setup();
     };
+
+    public connect() {
+        this.setup();
+    }
 
     private setup() {
         this.instance = new WebSocket("wss://blacket.org/worker/socket", {
