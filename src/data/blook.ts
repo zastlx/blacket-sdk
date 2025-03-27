@@ -3,7 +3,7 @@ import Rarity from "./rarity";
 import { endpoints } from "../";
 import { Client } from "../";
 import Pack from "./pack";
-import { BazaarListing } from "src/bazaar";
+import { BazaarListing } from "../bazaar";
 import { HttpStatusCode } from "axios";
 import { sleep } from "bun";
 
