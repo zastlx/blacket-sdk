@@ -39,44 +39,38 @@ export default class DataManager {
     public async init() {
         if (this.inited) return;
         this.inited = true;
-        this.client.axiosInstace.get(endpoints.data).then(async (res) => {
-            const data = res.data as RawData;
-            this.config = new Config(data.config, this.client);
-            this.booster = new Booster(res.data.booster, this.client);
-            await this.booster.init();
+        const data = (await this.client.axiosInstace.get(endpoints.data)).data as RawData;
+        this.config = new Config(data.config, this.client);
+        this.booster = new Booster(data.booster, this.client);
+        await this.booster.init();
+        for (const badge of Object.entries(data.badges)) {
+            this.badges.set(badge[0], new Badge(badge[1], badge[0]));
+        }
+        for (const rarity of Object.entries(data.rarities)) {
+            this.rarities.set(rarity[0], new Rarity(rarity[1], rarity[0], this.client));
+        }
+        for (const blook of Object.entries(data.blooks)) {
+            this.blooks.set(blook[0], new Blook(blook[1], blook[0], this.client));
+        }
+        for (const banner of Object.entries(data.banners)) {
+            this.banners.set(banner[0], new Banner(banner[1], banner[0]));
+        }
 
-            for (const badge of Object.entries(data.badges)) {
-                this.badges.set(badge[0], new Badge(badge[1], badge[0]));
-            }
+        for (const credit of data.credits) {
+            this.credits.push(new Credit(credit, this.client));
+        }
 
-            for (const rarity of Object.entries(data.rarities)) {
-                this.rarities.set(rarity[0], new Rarity(rarity[1], rarity[0], this.client));
-            }
+        for (const emoji of Object.entries(data.emojis)) {
+            this.emojis.set(emoji[0], new Emoji(emoji[1], emoji[0]));
+        }
 
-            for (const blook of Object.entries(data.blooks)) {
-                this.blooks.set(blook[0], new Blook(blook[1], blook[0], this.client));
-            }
+        for (const pack of Object.entries(data.packs)) {
+            this.packs.set(pack[0], new Pack(pack[1], pack[0], this.client));
+        }
 
-            for (const banner of Object.entries(data.banners)) {
-                this.banners.set(banner[0], new Banner(banner[1], banner[0]));
-            }
-
-            for (const credit of data.credits) {
-                this.credits.push(new Credit(credit, this.client));
-            }
-
-            for (const emoji of Object.entries(data.emojis)) {
-                this.emojis.set(emoji[0], new Emoji(emoji[1], emoji[0]));
-            }
-
-            for (const pack of Object.entries(data.packs)) {
-                this.packs.set(pack[0], new Pack(pack[1], pack[0], this.client));
-            }
-
-            for (const item of Object.entries(data.weekly_shop)) {
-                this.weeklyShop.set(item[0], new WeeklyShopItem(item[1], item[0], this.client));
-            }
-        });
+        for (const item of Object.entries(data.weekly_shop)) {
+            this.weeklyShop.set(item[0], new WeeklyShopItem(item[1], item[0], this.client));
+        }
     }
 
     /**
