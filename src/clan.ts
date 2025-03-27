@@ -1,4 +1,6 @@
-import { endpoints, User, type Client } from ".";
+import { sleep } from "bun";
+import { endpoints, RawUser, User, type Client } from ".";
+import { HttpStatusCode } from "axios";
 
 export interface RawClan {
     id: number;
@@ -33,7 +35,7 @@ export class Clan implements RawClan {
     public readonly created: number;
     public readonly exp: number;
     public owner: User;
-    public members: User[] = [];
+    public members: RawClanOwner[];
     public readonly online: number;
     public readonly offline: number;
     public readonly safe: boolean;
@@ -55,20 +57,19 @@ export class Clan implements RawClan {
         this.online = data.online;
         this.offline = data.offline;
         this.sent = data.sent;
+        this.members = data.members;
         /*
         this.owner = data.owner;
         this.members = data.members;*/
 
         // lazy loaded
-        this._owner = data.owner;
         this._members = data.members
     }
 
     public async init(): Promise<void> {
         if (this.inited) return;
         this.inited = true;
-        this.owner = await this.client.userManager.fetchUser(this._owner.id);
-        this.members = await Promise.all(this._members.map(async (member) => await this.client.userManager.fetchUser(member.id)));
+        this.owner = await this.client.userManager.fetchUser(this?._owner?.id);
     }
 
     /**
@@ -95,10 +96,15 @@ export default class ClanManager {
         return this.clans.get(id);
     }
 
-    public async fetchClan(id: number, force: boolean = false): Promise<Clan> {
-        if (this.clans.has(id) && !force) return this.clans.get(id);
+    public async fetchClan(id: number, force: boolean = false, wait: number = 0): Promise<Clan> {
+        if (this.clans.has(id) && force) return this.clans.get(id);
 
-        const { data } = await this.client.axiosInstace.get(endpoints.clans.get(id));
+        let { data, status } = await this.client.axiosInstace.get(endpoints.clans.get(id));
+        if (status == HttpStatusCode.ServiceUnavailable) {
+            return null;
+        }
+
+
 
         if (data.error && data.reason !== "Clan does not exist.") throw new Error(data.reason);
         if (data.error) return null;

@@ -1,5 +1,7 @@
+import { HttpStatusCode } from "axios";
 import { endpoints, type Client } from ".";
 import { Clan } from "./clan";
+import { sleep } from "bun";
 
 export interface RawUser {
     id: number;
@@ -66,17 +68,21 @@ export enum UserBadge {
     TweleveMonthVeteran = "12 Month Veteran",
     EighteenMonthVeteran = "18 Month Veteran",
     TwentyFourMonthVeteran = "24 Month Veteran",
+    ThirtyMonthVeteran = "30 Month Veteran",
+    ThirtySixMonthVeteran = "36 Month Veteran",
+    FourtyTwoMonthVeteran = "42 Month Veteran",
+    FourtyEightMonthVeteran = "48 Month Veteran",
     Artist = "Artist",
     BigSpender = "Big Spender",
+    BigSpenderV = "Big Spender V",
+    CommunityManager = "Community Manager",
     Blacktuber = "Blacktuber",
     Booster = "Booster",
     CoOwner = "Co-Owner",
     Developer = "Developer",
-    FullOfLard = "full of lard",
-    FullOfToken = "full of token",
-    Kangooro = "kangooro",
     LegacyAnkh = "Legacy Ankh",
     OG = "OG",
+    Partner = "Partner",
     Owner = "Owner",
     Plus = "Plus",
     Staff = "Staff",
@@ -227,6 +233,11 @@ export class User {
         if (this.badges.includes(UserBadge.TweleveMonthVeteran)) return 12;
         if (this.badges.includes(UserBadge.EighteenMonthVeteran)) return 18;
         if (this.badges.includes(UserBadge.TwentyFourMonthVeteran)) return 24;
+        if (this.badges.includes(UserBadge.ThirtyMonthVeteran)) return 30;
+        if (this.badges.includes(UserBadge.ThirtySixMonthVeteran)) return 36;
+        if (this.badges.includes(UserBadge.FourtyTwoMonthVeteran)) return 42;
+        if (this.badges.includes(UserBadge.FourtyEightMonthVeteran)) return 48;
+
         return 6;
     }
 }
@@ -308,14 +319,17 @@ export default class UserManager {
         return [...this.users.values()].find((user) => user.username === name);
     }
 
-    public async fetchUser(idOrName: string | number): Promise<User> {
+    public async fetchUser(idOrName: string | number, wait: number = 0): Promise<User> {
         if (!this.initied) throw new Error("UserManager has not been initied yet");
 
         if (idOrName === undefined) idOrName = this.client.user.id;
         const user = this.getUserByName(idOrName as string) || this.getUserById(idOrName as number);
         if (user) return user;
 
-        const { data } = await this.client.axiosInstace.get(endpoints.user.get(idOrName));
+        let { data, status } = await this.client.axiosInstace.get(endpoints.user.get(idOrName));
+        if (status == HttpStatusCode.ServiceUnavailable) {
+            return null;
+        }
 
         if (data.error && (["Username can not contain invalid characters.", "User not found.", "Username must be less than or 16 characters long."].includes(data.reason))) return null;
         else if (data.error) throw new Error(data.reason);

@@ -113,9 +113,9 @@ export default class DataManager {
     /**
      * getBlook - Get a blook by its name.
      * @param {String} name
-     * @returns {Blook}
+     * @returns {Blook | undefined}
      */
-    public getBlook(name: string) {
+    public getBlook(name: string): Blook | undefined {
         return this.blooks.get(name);
     }
 
@@ -223,9 +223,9 @@ export default class DataManager {
     /**
      * getItem - Get an item by its name.
      * @param {String} name
-     * @returns {Item}
+     * @returns {Item | undefined}
      */
-    public getItem(name: string) {
+    public getItem(name: string): Item | undefined {
         return this.items.get(name);
     }
 

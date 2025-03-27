@@ -3,6 +3,9 @@ import Rarity from "./rarity";
 import { endpoints } from "../";
 import { Client } from "../";
 import Pack from "./pack";
+import { BazaarListing } from "src/bazaar";
+import { HttpStatusCode } from "axios";
+import { sleep } from "bun";
 
 export enum Day {
     Sunday = 0,
@@ -124,5 +127,27 @@ export default class Blook {
         const me = await this.client.userManager.getMe(force);
 
         return me.blooks.get(this.name) || 0;
+    }
+
+    /**
+     * list - List this blook on the bazaar at a specific price
+     * @param {Number} price - The price to list the blook at
+     * @throws {Error} If the price is not within the allowed range
+     * @returns {Promise<BazaarListing>} The created bazaar listing
+     */
+    public async list(price: number): Promise<BazaarListing> {
+        if (!this.canListAt(price)) throw new Error(`You cannot list this blook at ${price}. The price must be between ${this.bazaarMinimumListingPrice} and ${this.bazaarMaximumListingPrice}.`);
+
+        const { data, status } = await this.client.axiosInstace.post(endpoints.bazaar.list, { item: this.name, price });
+        if (status != HttpStatusCode.Ok) {
+            await sleep(5000);
+            return this.list(price);
+        }
+        if (data.error) throw new Error(data.reason);
+        const listing = new BazaarListing(this.client, data.listing);
+        await listing.init();
+        this.client.bazaarManager.setListing(listing.id, listing);
+
+        return listing;
     }
 }

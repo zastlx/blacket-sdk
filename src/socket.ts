@@ -102,6 +102,7 @@ export class Socket {
 
         this.instance.addEventListener("open", async () => {
             if (!this.client.userManager.initied) await this.client.userManager.init();
+            if (!this.client.bazaarManager.initied) await this.client.bazaarManager.init();
             if (!this.client.dataManager.inited) await this.client.dataManager.init();
 
             this.events[SocketEvents.OPEN].forEach((callback) => callback(this.client));

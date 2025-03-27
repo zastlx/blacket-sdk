@@ -5,6 +5,12 @@ const endpoints = {
         delete: (id: number) => `/worker/messages/${id}/delete`,
         edit: (id: number) => `/worker/messages/${id}/edit`
     },
+    bazaar: {
+        search: (query?: string) => `/worker/bazaar${query ? `?query=${query}` : ""}`,
+        buy: "/worker/bazaar/buy",
+        list: "/worker/bazaar/list",
+        remove: "worker/bazaar/remove",
+    },
     user: {
         get: (idOrName?: string | number) => `/worker2/user/${idOrName ?? ""}`
     },
@@ -19,7 +25,7 @@ const endpoints = {
         use: "/worker/use"
     },
     clans: {
-        get: (id: number) => `/worker/clans/${id}`
+        get: (id: number) => `/worker/clans/${id} `
     },
     data: "/data/index.json",
     base: "https://blacket.org"

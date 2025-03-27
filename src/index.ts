@@ -6,6 +6,7 @@ import { version } from "./consts";
 import UserManager, { PrivateUser } from "./user";
 import ClanManager from "./clan";
 import DataManager from "./data";
+import BazaarManager from "./bazaar";
 export * from "./helpers";
 export * from "./consts";
 export * from "./socket";
@@ -47,6 +48,7 @@ export class Client {
     public readonly clanManager: ClanManager;
     public readonly dataManager: DataManager;
     public readonly userManager: UserManager;
+    public readonly bazaarManager: BazaarManager;
     public readonly socket: Socket;
     public readonly axiosInstace: AxiosInstance;
     public user: PrivateUser;
@@ -73,6 +75,7 @@ export class Client {
         });
 
         this.userManager = new UserManager(this);
+        this.bazaarManager = new BazaarManager(this);
         this.roomManager = new RoomManager(this);
         this.clanManager = new ClanManager(this);
         this.dataManager = new DataManager(this);
